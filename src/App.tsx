@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import styled from 'styled-components';
 
-function App() {
+import { FormattedPlanetData, formatPlanets } from './utils/tools';
+import DataTable from './components/data-table';
+import ErrorMessage from './components/error-component';
+import LoadingMessage from './components/loading-component';
+
+
+function App(): React.ReactElement {
+  const [planetData, setPlanetData] = useState<FormattedPlanetData[]>([]);
+  const [error, setError] = useState<AxiosError>();
+
+  useEffect(() => {
+    axios('https://swapi.dev/api/planets/')
+      .then((res) => {
+        const planets = formatPlanets(res.data.results);
+        
+        setPlanetData(planets);
+      })
+      .catch((error) => setError(error));
+  }, []);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      
+      {error ? 
+        <ErrorMessage error={error}/> :
+          planetData.length ? 
+            <>
+              <Title>Planetary Information Center</Title>
+              <DataTable planetData={planetData} />
+            </> :
+            <LoadingMessage/>
+      }
+    </>
   );
-}
+};
+
+const Title = styled.h1`
+  text-align: center;
+  margin: 1em auto;
+`;
 
 export default App;
