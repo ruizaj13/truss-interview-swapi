@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Instructions to run the project:
 
-## 1. Ensure latest version of node is [installed on your machine](https://stackoverflow.com/questions/11284634/upgrade-node-js-to-the-latest-version-on-mac-os)
+### 1. Ensure latest version of node is [installed on your machine](https://stackoverflow.com/questions/11284634/upgrade-node-js-to-the-latest-version-on-mac-os)
 
 ### 2. Install package.json dependencies:
 
